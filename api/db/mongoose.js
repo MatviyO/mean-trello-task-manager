@@ -5,4 +5,9 @@ mongoose.connect('mongodb://localhost:27017/Trello', {useNewUrlParser: true}).th
 }).catch((e) => {
     console.log('Error:', e)
 })
+mongoose.set('useCreateIndex' , true)
+mongoose.set('useFindAndModify' , false)
 
+module.exports = {
+    mongoose
+}

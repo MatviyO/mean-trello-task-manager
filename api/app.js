@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { List, Task} = require('./db/models')
 
 app.get('/lists', (req,res) => {
     res.send('hay')
