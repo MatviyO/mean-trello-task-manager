@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
 import {TaskService} from "./task.service";
 import {RequestService} from "./request.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {RequestService} from "./request.service";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [TaskService, RequestService],
   bootstrap: [AppComponent]

@@ -5,6 +5,11 @@ const bodyParser = require('body-parser')
 const { List, Task} = require('./db/models/index')
 
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-with, Content-Type, Accept");
+    next();
+})
 
 app.get('/lists', (req,res) => {
     List.find({}).then(lists => {

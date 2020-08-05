@@ -10,16 +10,16 @@ export class RequestService {
   constructor(private http: HttpClient) { }
 
   get(url: string) {
-      this.http.get(`${this.URl}/${url}`)
+    return this.http.get(`${this.URl}/${url}`)
   }
   post(url: string, payload: Object) {
-    this.http.post(`${this.URl}/${url}`, payload)
+    return this.http.post(`${this.URl}/${url}`, payload)
   }
   patch(url: string, payload: Object) {
-    this.http.patch(`${this.URl}/${url}`, payload)
+    return this.http.patch(`${this.URl}/${url}`, payload)
   }
   delete(url: string) {
-    this.http.delete(`${this.URl}/${url}`)
+    return this.http.delete(`${this.URl}/${url}`)
   }
 
 }

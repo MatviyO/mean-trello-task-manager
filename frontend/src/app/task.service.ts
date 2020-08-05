@@ -9,6 +9,6 @@ export class TaskService {
   constructor(private requestService: RequestService) { }
 
   createList(title: string) {
-    return this.requestService.post('/list', {title})
+    return this.requestService.post('lists', {title})
   }
 }
