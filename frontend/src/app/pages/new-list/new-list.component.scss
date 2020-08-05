@@ -1,0 +1,16 @@
+.modal-box {
+  min-height: 200px;
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
