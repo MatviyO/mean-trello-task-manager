@@ -8,6 +8,6 @@ const ListSchema = mongoose.Schema({
     }
 })
 
-const List = mongoose.Model('list', ListSchema)
+const List = mongoose.model('list', ListSchema)
 
 module.exports = {List}

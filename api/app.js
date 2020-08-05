@@ -1,20 +1,83 @@
 const express = require('express');
 const app = express();
-const { List, Task} = require('./db/models')
+const mongoose = require('./db/mongoose')
+const bodyParser = require('body-parser')
+const { List, Task} = require('./db/models/index')
+
+app.use(bodyParser.json());
 
 app.get('/lists', (req,res) => {
-    res.send('hay')
+    List.find({}).then(lists => {
+        res.send(lists)
+    })
 })
 app.post('/lists', (req,res) => {
-    res.send('hay')
+    let title = req.body.title;
+
+    let newList = new List({
+        title
+    })
+    newList.save().then( listdoc => {
+        res.send(listdoc)
+    })
 })
 app.patch('/lists:id', (req, res) => {
-
+    List.findOneAndUpdate({ _id: req.params.id}, {
+        $set: req.body
+    }).then(() => {
+        res.sendStatus(200);
+    })
 })
 app.delete('/lists:id', (req, res) => {
-
+    List.findOneAndDelete({_id: req.params.id}, {
+        $set: req.body
+    }).then((removedoc) => {
+        res.send(removedoc);
+    })
 })
 
+app.get('/lists/:listId/tasks', (req,res) => {
+    Task.find({
+        _listId: req.params.listId
+    }).then((tasks) => {
+        res.send(tasks)
+    })
+})
+app.get('/lits/:listId/tasks/:taskId', (req, res) => {
+    Task.find({
+        _listId: req.params.listId,
+        _id: req.params.taskId
+    }).then((task) => {
+        res.send(task)
+    })
+})
+app.post('/lists/:listId/tasks', (req, res) => {
+    let newTask = new Task({
+        _listId: req.params.listId,
+        title: req.body.title
+    });
+    newTask.save().then( newtaskdoc => {
+        res.send(newtaskdoc)
+    })
+})
+app.patch('/lists/:listId/tasks/:taskId', (req,res) => {
+    Task.findOneAndUpdate({
+        _id: req.params.taskId,
+        _listId: req.params.listId
+    }, {
+        $set: req.body
+    }).then(() => {
+        res.sendStatus(200)
+    })
+})
+app.delete('/lists/:id/tasks/:taskId', (req,res) => {
+    Task.findOneAndDelete({
+        _id: req.params.taskId,
+        _listId: req.params.listId
+    }).then((removetask)=> {
+        res.send(removetask);
+    })
+})
 
 try {
     app.listen(3000, () => {
