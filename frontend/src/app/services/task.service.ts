@@ -11,10 +11,14 @@ export class TaskService {
   createList(title: string) {
     return this.requestService.post('lists', {title})
   }
+  createTask(title: string, listId: string) {
+    return this.requestService.post(`lists/${listId}/tasks`, {title})
+  }
   getLists() {
     return this.requestService.get('lists');
   }
   getTasks(listId: string) {
     return this.requestService.get(`lists/${listId}/tasks`);
   }
+
 }

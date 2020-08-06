@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {TaskService} from "../../task.service";
+import {TaskService} from "../../services/task.service";
+import {Router} from "@angular/router";
+import {IList} from "../../models/list.model";
 
 @Component({
   selector: 'app-new-list',
@@ -8,13 +10,14 @@ import {TaskService} from "../../task.service";
 })
 export class NewListComponent implements OnInit {
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
   }
   createNewList(title: string) {
-    this.taskService.createList(title).subscribe((response: any) => {
-      console.log(response)
+    this.taskService.createList(title).subscribe((response: IList) => {
+      this.router.navigate(['/lists', response._id])
     })
   }
 
