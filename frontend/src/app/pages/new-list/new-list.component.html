@@ -4,11 +4,11 @@
 
       <div class="field ">
         <p class="control is-expanded">
-          <input type="text" class="input" placeholder="New List">
+          <input #listtitle type="text" class="input" placeholder="New List">
         </p>
         <p class="control pt-3 flex-end">
           <a class="button  " routerLink="/">Go back</a>
-          <a class="button ml-3 is-primary has-text-white" >Create</a>
+          <a class="button ml-3 is-primary has-text-white" (click)="createNewList(listtitle.value)">Create</a>
         </p>
       </div>
 
