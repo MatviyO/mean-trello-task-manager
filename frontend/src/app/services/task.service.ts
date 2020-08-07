@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RequestService} from "./request.service";
+import {ITask} from "../models/task.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,11 @@ export class TaskService {
   }
   getTasks(listId: string) {
     return this.requestService.get(`lists/${listId}/tasks`);
+  }
+  completed(task: ITask) {
+      return this.requestService.patch(`lists/${task._listId}/tasks/${task._id}`, {
+        completed: true
+      })
   }
 
 }
