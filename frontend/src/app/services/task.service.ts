@@ -23,7 +23,7 @@ export class TaskService {
   }
   completed(task: ITask) {
       return this.requestService.patch(`lists/${task._listId}/tasks/${task._id}`, {
-        completed: true
+        completed: !task.completed
       })
   }
 
