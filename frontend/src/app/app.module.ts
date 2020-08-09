@@ -9,13 +9,15 @@ import {RequestService} from "./services/request.service";
 import {HttpClientModule} from "@angular/common/http";
 import { NewListComponent } from './pages/new-list/new-list.component';
 import { NewTaskComponent } from './pages/new-task/new-task.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskViewComponent,
     NewListComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
