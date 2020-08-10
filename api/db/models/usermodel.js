@@ -86,10 +86,21 @@ UserSchema.statics.findByCredentials = function(email, password) {
         return new Promise((resolve, reject) => {
             bcrypt.compare(password, user.password, (err,res) => {
                 if ( res) resolve(user);
+                else {
+                    reject();
+                }
             })
         })
     })
+}
 
+UserSchema.statics.hasRefreshTokenExpired = (expiresAt) => {
+    let secondsSinceEpoch = Date.now() / 1000;
+    if (expiresAt > secondsSinceEpoch) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 UserSchema.pre('save', function (next) {
@@ -128,6 +139,6 @@ let generateRefreshTokenExpiryTime = () => {
     return ((Date.now() / 1000) + secondsUntilExpire);
 }
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', UserSchema);
 
-module.exports = {User}
+module.exports = { User }
