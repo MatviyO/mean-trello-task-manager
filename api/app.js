@@ -10,7 +10,41 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT,PATCH, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-with, Content-Type, Accept");
     next();
-})
+});
+let verifySession = (req,res,next) => {
+    let refreshToken = req.header('x-refresh-token');
+    let _id  = req.header('_id');
+
+    User.findByIdAndToken(_id, refreshToken ).then((user) => {
+        if (!user) {
+            return Promise.reject({
+                'error': 'User no found'
+            });
+        }
+
+        req.user._id = user._id;
+        req.userObject = user;
+        req.refreshToken = refreshToken;
+        let isSessionvailid = false
+        user.sessions.forEach((session) => {
+            if ( session.token === refreshToken) {
+                if (User.hasRefreshTokenExpired(session.expiresAt) ===false) {
+                    isSessionvailid = true
+                }
+            }
+        });
+        if ( isSessionvailid) {
+            next();
+        } else {
+            return Promise.reject({
+                'error': 'refresh token has expired or invalid'
+            })
+        }
+    }).catch(e => {
+        res.status(400).send(e)
+    })
+}
+
 
 app.get('/lists', (req,res) => {
     List.find({}).then(lists => {
@@ -86,18 +120,51 @@ app.delete('/lists/:id/tasks/:taskId', (req,res) => {
 })
 
 app.post('/users', (req, res) => {
-
     let body = req.body;
-    let newUser = new User(body)
+    let newUser = new User(body);
 
     newUser.save().then(() => {
-        return newUrl.createSession();
-    }).then( refreshTokken => {
-        return newUser.generateAccessAuthToken().then(accessToken => {
-            return { accessToken, refreshTokken}
-        })
+        return newUser.createSession();
+    }).then((refreshToken) => {
+        return newUser.generateAccessAuthToken().then((accessToken) => {
+            return { accessToken, refreshToken }
+        });
+    }).then((authTokens) => {
+        res
+            .header('x-refresh-token', authTokens.refreshToken)
+            .header('x-access-token', authTokens.accessToken)
+            .send(newUser);
+    }).catch((e) => {
+        res.status(400).send(e);
     })
+})
 
+
+app.post('/users/login', (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    User.findByCredentials(email, password).then((user) => {
+        return user.createSession().then((refreshToken) => {
+            return user.generateAccessAuthToken().then((accessToken) => {
+                return { accessToken, refreshToken }
+            });
+        }).then((authTokens) => {
+            res
+                .header('x-refresh-token', authTokens.refreshToken)
+                .header('x-access-token', authTokens.accessToken)
+                .send(user);
+        })
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+app.get('/users/me/access-token' , verifySession , (req, res) => {
+   req.userObject.generateAccessAuthToken().then((accessToken) => {
+       res.header('x-access-token', accessToken).send({ accessToken})
+   }).catch(e => {
+       res.status(400).send(e)
+   })
 })
 
 try {
