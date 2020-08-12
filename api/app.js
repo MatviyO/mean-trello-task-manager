@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('./db/mongoose')
 const bodyParser = require('body-parser')
-const { List, Task} = require('./db/models/index')
+const { List, Task, User} = require('./db/models/index')
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -85,11 +85,18 @@ app.delete('/lists/:id/tasks/:taskId', (req,res) => {
     })
 })
 
-app.use('/users', (req, res) => {
+app.post('/users', (req, res) => {
 
     let body = req.body;
-    let newUrl =
-  console.log('')
+    let newUser = new User(body)
+
+    newUser.save().then(() => {
+        return newUrl.createSession();
+    }).then( refreshTokken => {
+        return newUser.generateAccessAuthToken().then(accessToken => {
+            return { accessToken, refreshTokken}
+        })
+    })
 
 })
 
