@@ -21,5 +21,12 @@ export class RequestService {
   delete(url: string) {
     return this.http.delete(`${this.URl}/${url}`)
   }
+  login(email: string, password: string) {
+    return this.http.post(`${this.URl}/users/login`, {
+      email, password
+    }, {
+      observe: 'response'
+    })
+  }
 
 }

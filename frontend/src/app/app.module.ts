@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { NewListComponent } from './pages/new-list/new-list.component';
 import { NewTaskComponent } from './pages/new-task/new-task.component';
 import { LoginComponent } from './pages/login/login.component';
+import {AuthService} from "./services/auth.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { LoginComponent } from './pages/login/login.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [TaskService, RequestService],
+  providers: [TaskService, RequestService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
