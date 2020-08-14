@@ -13,8 +13,7 @@ export class WebinterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     request = this.addAuthHeader(request);
-    console.log()
-
+  
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error)
