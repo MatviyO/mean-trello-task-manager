@@ -14,6 +14,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.requestService.login(email, password).pipe(
+    console.log()
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
