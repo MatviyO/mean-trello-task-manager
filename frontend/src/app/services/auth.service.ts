@@ -23,7 +23,6 @@ export class AuthService {
   }
 
   logout() {
-  	console.log()
     this.removeSession()
   }
   getAccessTokken() {
