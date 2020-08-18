@@ -27,6 +27,14 @@ export class RequestService {
     }, {
       observe: 'response'
     })
+
+  }
+  signup(email: string, password: string) {
+    return this.http.post(`${this.URl}/users`, {
+      email, password
+    }, {
+      observe: 'response'
+    })
   }
 
 }
