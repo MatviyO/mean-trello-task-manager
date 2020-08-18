@@ -330,7 +330,6 @@ app.post('/users', (req, res) => {
 app.post('/users/login', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
-    console.log(req.body)
 
     User.findByCredentials(email, password).then((user) => {
         return user.createSession().then((refreshToken) => {
@@ -343,7 +342,6 @@ app.post('/users/login', (req, res) => {
             });
         }).then((authTokens) => {
             // Now we construct and send the response to the user with their auth tokens in the header and the user object in the body
-            console.log('fdgd', authTokens)
             res
                 .header('x-refresh-token', authTokens.refreshToken)
                 .header('x-access-token', authTokens.accessToken)
@@ -378,6 +376,8 @@ let deleteTasksFromList = (_listId) => {
         console.log("Tasks from " + _listId + " were deleted!");
     })
 }
+
+
 
 try {
     app.listen(3000, () => {

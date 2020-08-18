@@ -23,13 +23,18 @@ export class AuthService {
   }
 
   logout() {
-    this.removeSession()
+    this.removeSession();
+
+    this.router.navigate(['/login']);
   }
   getAccessTokken() {
-    return localStorage.getItem('x-access-item');
+    return localStorage.getItem('x-access-token');
   }
   getRefreshToken() {
     return localStorage.getItem('x-refresh-token')
+  }
+  getUserId() {
+    return localStorage.getItem('user-id')
   }
   setAccessToken(accessToken: string) {
     localStorage.setItem('x-access-token', accessToken)
@@ -45,5 +50,18 @@ export class AuthService {
     localStorage.removeItem('user-id');
     localStorage.removeItem('x-access-token');
     localStorage.removeItem('x-refresh-token');
+  }
+  getNewAccessToken() {
+    return this.http.get(`${this.requestService.URl}/users/me/access-token`, {
+      headers: {
+        'x-refresh-token': this.getRefreshToken(),
+        '_id': this.getUserId()
+      },
+      observe: 'response'
+    }).pipe(
+      tap((res: HttpResponse<any>) => {
+        this.setAccessToken(res.headers.get('x-access-token'));
+      })
+    )
   }
 }
