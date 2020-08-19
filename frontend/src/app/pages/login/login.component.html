@@ -15,11 +15,13 @@
           <input #psInput type="password" class="input" placeholder="Password">
         </p>
       </div>
-      <div class="field is-pulled-right">
+      <div class="field is-pulled-right" style="display: flex; justify-content: flex-end;">
         <p class="control">
           <button class="button is-success has-text-white" (click)="onLoginClick(emailInput.value, psInput.value)">Login</button>
         </p>
       </div>
+      <br>
+      <p>Not got on account? <a routerLink="/signup">Sign up now!</a></p>
     </div>
   </div>
 </div>
