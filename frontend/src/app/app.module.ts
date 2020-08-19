@@ -13,6 +13,8 @@ import { LoginComponent } from './pages/login/login.component';
 import {AuthService} from "./services/auth.service";
 import {WebinterceptorService} from "./services/webinterceptor.service";
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
+import { EditListComponent } from './pages/edit-list/edit-list.component';
+import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SignupPageComponent } from './pages/signup-page/signup-page.component';
     NewListComponent,
     NewTaskComponent,
     LoginComponent,
-    SignupPageComponent
+    SignupPageComponent,
+    EditListComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,

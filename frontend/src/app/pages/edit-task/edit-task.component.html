@@ -1,0 +1,14 @@
+<div class="contered-content">
+  <div class="modal-box ">
+    <h1 class="title">Update Task</h1>
+    <div class="field ">
+      <p class="control is-expanded">
+        <input #tasktitle type="text" class="input" placeholder="Task name...">
+      </p>
+      <p class="control pt-3 flex-end">
+        <a class="button  " routerLink="/">Go back</a>
+        <a class="button ml-3 is-primary has-text-white" (click)="updateTask(tasktitle.value)">Update</a>
+      </p>
+    </div>
+  </div>
+</div>

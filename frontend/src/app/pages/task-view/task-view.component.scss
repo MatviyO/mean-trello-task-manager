@@ -25,6 +25,15 @@
   padding: 5%;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+
+  .top-bar {
+    margin-bottom: 20px;
+    display: flex;
+    .title {
+      flex-grow: 1;
+      margin: 0;
+    }
+  }
 }
 .gb-ligth {
   background: #f8f8f8;
@@ -57,23 +66,41 @@
    }
 }
 .task {
+  display: flex;
   background: white;
   padding: 15px 20px;
   border-radius: 5px;
   margin-top: 10px;
   font-family: "Nirmala UI";
   transition: box-shadow 0.4s ease, transform 0.4s ease;
+  align-items: center;
 
-  &:active {
-    transform: scale(0.90);
-  }
+  &:not(.completed) {
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    &:active {
+      transform: scale(0.90);
+    }
 
-  &:hover {
-    box-shadow: 0 0 0 5px #eeeeee;
+    &:hover {
+      box-shadow: 0 0 0 5px #eeeeee;
+      .task-buttons {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+    }
   }
-  &.completed {
+  &.completed .task-text {
     text-decoration: line-through;
     opacity: 0.8;
+  }
+  .task-text {
+    flex-grow: 1;
+  }
+  .task-buttons {
+    transition: opacity 0.3s, transform 0.3s;
+    transform: scale(0.85);
+    opacity: 0;
   }
 
 }
@@ -91,4 +118,7 @@
   font-size: 20px;
   color: #555;
   text-align: center;
+}
+.dropdown-content {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
